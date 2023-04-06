@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const routes = require('./controllers');
+const routes = require('./routes');
 //const helpers = require('./utils/helpers');
 
 const sequelize = require('./config/connections');
@@ -31,11 +31,11 @@ getRandomAnime()
 
 // app.use(session(sess));
 
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.static(path.join(__dirname, 'public')));
+ app.use(express.json());
+ app.use(express.urlencoded({ extended: true }));
+ app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(routes);
+ app.use(routes);
 
  sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
