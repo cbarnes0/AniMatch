@@ -4,7 +4,7 @@
 // Cover img url
 
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize = require('../config/connections');
 
 class Favorite extends Model {}
 Favorite.init(
@@ -21,9 +21,9 @@ Favorite.init(
     },
     description: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
     },
-    imgurl: {
+    img_url: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
