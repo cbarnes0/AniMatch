@@ -6,6 +6,18 @@ const { User, Favorite } = require('../../models');
 //     console.log('api/users GET endpoint reached');
 // });
 
+router.post('/signup', async (req, res) => {
+    console.log('reached api/users/signup');
+    try {
+        const { username, password } = req.body;
+        const user = new User({ username, password });
+        await user.save();
+        res.status(201).send({ message: 'User created successfully' });
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+});
+
 // GET all favorites from a SINGLE user
 router.get('/:userId/favorites', async (req, res) => {
     const userId = req.params.userId;
