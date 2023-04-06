@@ -22,9 +22,13 @@ function getRandomAnime() {
       console.log('This is the extracted description');
       console.log(animeSynopsis);
       // extract image URL from response JSON
-      const image_url = data.data.images.jpg.large_image_url;
+      const imageURL = data.data.images.jpg.large_image_url;
       console.log('This is the extracted image URL:');
-      console.log(image_url);
+      console.log(imageURL);
+      //extract genre
+      // const genre = data.data.images.jpg.large_image_url;
+      // console.log('This is the extracted genre:');
+      // console.log(genre);
     });
 }
 
