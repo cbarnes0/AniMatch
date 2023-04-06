@@ -3,7 +3,7 @@ const express = require('express');
 const routes = require('./controllers');
 //const helpers = require('./utils/helpers');
 
-//const sequelize = require('./config/connection');
+const sequelize = require('./config/connections');
 //const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const getRandomAnime = require('./public/js/animeFetch')
@@ -37,6 +37,6 @@ getRandomAnime()
 
 // app.use(routes);
 
-// sequelize.sync({ force: false }).then(() => {
-//   app.listen(PORT, () => console.log('Now listening'));
-// });
+ sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening'));
+});
