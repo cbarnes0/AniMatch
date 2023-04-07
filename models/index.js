@@ -5,4 +5,6 @@ User.hasMany(Favorite, {
     foreignKey: 'user_id',
     onDelete: 'CASCADE',
 });
+Favorite.belongsTo(User);
+
 module.exports = { User, Favorite };
