@@ -2,7 +2,7 @@
 //const fetch = require('isomorphic-fetch');
 
 
-const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime'
+const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime?sfw'
 //animeFetch()
 async function getRandomAnime() {
   fetch(randomAnimeURL)
@@ -72,7 +72,8 @@ async function postRandomAnime() {
         })
       })
       .then(response => response.json())
-      .then(data => console.log('Anime saved to favorites:', data))
+      .then(data => console.log('Anime saved to favorites:', data));
+      getRandomAnime()
       .catch(error => console.error('Error saving anime to favorites:', error));
     })
     .catch(error => console.error('Error fetching anime:', error));
