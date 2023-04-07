@@ -1,17 +1,17 @@
 // fetch random anime
-const fetch = require('isomorphic-fetch');
+//const fetch = require('isomorphic-fetch');
 
 
 const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime'
-// manga api
-// const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime'
-
+//animeFetch()
 async function getRandomAnime() {
   fetch(randomAnimeURL)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
+      renderImage(data.data.images.jpg.large_image_url, data.data.titles[0].title, data.data.synopsis )
+
       console.log('This is the API fetch data:');
       console.dir(data);
       // extract title 
@@ -33,6 +33,7 @@ async function getRandomAnime() {
       // console.log(genre);
     });
 }
+
 
 // This function will use axios library and the favorite model defined
 // to make a post request to your server endpoint that handles saving the favorite 
@@ -75,9 +76,4 @@ async function postRandomAnime() {
       .catch(error => console.error('Error saving anime to favorites:', error));
     })
     .catch(error => console.error('Error fetching anime:', error));
-};
-
-module.exports = {
-  getRandomAnime,
-  postRandomAnime
 };

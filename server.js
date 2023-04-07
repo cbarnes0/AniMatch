@@ -13,8 +13,9 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // here for testing
-getRandomAnime()
-postRandomAnime()
+// getRandomAnime()
+// postRandomAnime()
+
 // const sess = {
 //   secret: 'Super secret secret',
 //   cookie: {
