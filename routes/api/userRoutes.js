@@ -6,17 +6,33 @@ const { User, Favorite } = require('../../models');
 //     console.log('api/users GET endpoint reached');
 // });
 
+// POST a signup page
 router.post('/signup', async (req, res) => {
     console.log('reached api/users/signup');
     try {
-        const { username, password } = req.body;
-        const user = new User({ username, password });
+        const { email, password } = req.body;
+        const user = new User({ email, password });
         await user.save();
         res.status(201).send({ message: 'User created successfully' });
     } catch (error) {
         res.status(400).send({ error: error.message });
     }
 });
+
+// POST a login page
+router.post('/login', async (req, res) => {
+    console.log('reached api/users/login');
+    try {
+      const { username, password } = req.body;
+      const user = await User.findOne({ username });
+      if (!user || user.password !== password) {
+        throw new Error('Invalid login credentials');
+      }
+      res.status(200).send({ message: 'Login successful' });
+    } catch (error) {
+      res.status(401).send({ error: error.message });
+    }
+  });
 
 // GET all favorites from a SINGLE user
 router.get('/:userId/favorites', async (req, res) => {
