@@ -6,14 +6,15 @@ const routes = require('./routes');
 const sequelize = require('./config/connections');
 //const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const getRandomAnime = require('./public/js/animeFetch')
+const { getRandomAnime, postRandomAnime } = require('./public/js/animeFetch.js');
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // here for testing
 getRandomAnime()
-
+postRandomAnime()
 // const sess = {
 //   secret: 'Super secret secret',
 //   cookie: {
