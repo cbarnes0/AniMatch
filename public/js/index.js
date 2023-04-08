@@ -20,17 +20,26 @@ ${title}
 
 const postAnime = async () => {
   const response = await fetch(randomAnimeURL);
-  const data = await response.json()
-  
+  const animeData = await response.json();
 
-  saveBtnEl.addEventListener('click', async ()=>{
-    // need code to save to database
-    console.log('Anime data saved', data);
-  })
-  renderImage(data.data.images.jpg.large_image_url, data.data.titles[0].title, data.data.synopsis)
+  saveBtnEl.addEventListener('click', async () => {
+    const response = await fetch('/api/homeRoutes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({...animeData, user_id: 1})
+    });
+
+    const result = await response.text();
+    console.log(result);
+    console.log('Anime data saved', result);
+  });
+
+  renderImage(animeData.data.images.jpg.large_image_url, animeData.data.titles[0].title, animeData.data.synopsis);
 }
-
-
 
 saveBtnEl.addEventListener('click', postAnime)
 passBtnEl.addEventListener('click', getRandomAnime)
+
+
