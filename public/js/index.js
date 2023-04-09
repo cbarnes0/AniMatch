@@ -1,8 +1,8 @@
 const contentContainerEL = document.getElementById('content-container');
 const btnContainerEl = document.getElementById('btn-container');
-//window.onload = getRandomAnime
+window.onload = getRandomAnime
 
-let animeData = ''
+let animeData = '';
 const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime?sfw';
 
 async function getRandomAnime() {
@@ -14,16 +14,18 @@ async function getRandomAnime() {
       const title = data.data.titles[0].title;
       const description = data.data.synopsis;
       const img_url = data.data.images.jpg.large_image_url;
-     // const user_id = 1;
-       animeData = {
+      // const user_id = 1;
+      animeData = {
         title: data.data.titles[0].title,
         description: data.data.synopsis,
         img_url: data.data.images.jpg.large_image_url,
+        //need to get this checked to be replaced with the user
         user_id: 2,
       };
       renderImage(title, description, img_url);
     });
 }
+
 const renderImage = (title, synopsis, url) => {
   contentContainerEL.innerHTML = `
  <img alt="Art"
@@ -40,43 +42,27 @@ ${title}
 };
 
 const postAnime = () => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      console.log(animeData);
-      console.log(JSON.stringify(animeData));
-      
-      const postData = { message: "hello world" };
-      const response = await fetch('/api/homepage', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-      });
-      const result = await response.text();
-      console.log(result);
-      console.log('Anime data saved', result);
-      getRandomAnime();
-      resolve(result);
-    } catch (error) {
-      console.error('Error:', error);
-      reject(error);
-    }
+  axios.post('/api/homepageroutes', animeData)
+  .then(response => {
+    console.log(animeData);
+  })
+  .catch(error => {
+    console.error(error);
   });
 };
 
 const next = (buttonClicked) => {
- // console.log('buttonClicked:', buttonClicked);
+  // console.log('buttonClicked:', buttonClicked);
   if (buttonClicked === 'Pass') {
-    //console.log('i clicked Pass');
-    getRandomAnime()
+    console.log('i clicked Pass');
+    getRandomAnime();
   } else {
-    //console.log('i clicked Save');
-    postAnime()
+    console.log('i clicked Save');
+    postAnime();
   }
 };
 
 btnContainerEl.addEventListener('click', (e) => {
- // console.log('clicked button textContent:', e.target.textContent);
+  // run the next function to check what was clicked
   next(e.target.textContent.trim());
 });
