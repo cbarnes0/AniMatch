@@ -1,10 +1,31 @@
+const contentContainerEL = document.getElementById('content-container');
+const btnContainerEl = document.getElementById('btn-container');
+//window.onload = getRandomAnime
 
-const contentContainerEL = document.getElementById('content-container')
-const saveBtnEl = document.getElementById('saveBtn')
-const passBtnEl = document.getElementById('passBtn')
+let animeData = ''
+const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime?sfw';
 
-const renderImage = (url, title, synopsis ) => {
- contentContainerEL.innerHTML = `
+async function getRandomAnime() {
+  fetch(randomAnimeURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      const title = data.data.titles[0].title;
+      const description = data.data.synopsis;
+      const img_url = data.data.images.jpg.large_image_url;
+     // const user_id = 1;
+       animeData = {
+        title: data.data.titles[0].title,
+        description: data.data.synopsis,
+        img_url: data.data.images.jpg.large_image_url,
+        user_id: 2,
+      };
+      renderImage(title, description, img_url);
+    });
+}
+const renderImage = (title, synopsis, url) => {
+  contentContainerEL.innerHTML = `
  <img alt="Art"
  src="${url}"
  class="h-64 w-full object-cover sm:h-80 lg:h-96" />
@@ -15,31 +36,47 @@ ${title}
  ${synopsis}
 </p>
 </a>
- ` 
-}
+ `;
+};
 
-const postAnime = async () => {
-  const response = await fetch(randomAnimeURL);
-  const animeData = await response.json();
-
-  saveBtnEl.addEventListener('click', async () => {
-    const response = await fetch('/api/homeRoutes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({...animeData, user_id: 1})
-    });
-
-    const result = await response.text();
-    console.log(result);
-    console.log('Anime data saved', result);
+const postAnime = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      console.log(animeData);
+      console.log(JSON.stringify(animeData));
+      
+      const postData = { message: "hello world" };
+      const response = await fetch('/api/homepage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      });
+      const result = await response.text();
+      console.log(result);
+      console.log('Anime data saved', result);
+      getRandomAnime();
+      resolve(result);
+    } catch (error) {
+      console.error('Error:', error);
+      reject(error);
+    }
   });
+};
 
-  renderImage(animeData.data.images.jpg.large_image_url, animeData.data.titles[0].title, animeData.data.synopsis);
-}
+const next = (buttonClicked) => {
+ // console.log('buttonClicked:', buttonClicked);
+  if (buttonClicked === 'Pass') {
+    //console.log('i clicked Pass');
+    getRandomAnime()
+  } else {
+    //console.log('i clicked Save');
+    postAnime()
+  }
+};
 
-saveBtnEl.addEventListener('click', postAnime)
-passBtnEl.addEventListener('click', getRandomAnime)
-
-
+btnContainerEl.addEventListener('click', (e) => {
+ // console.log('clicked button textContent:', e.target.textContent);
+  next(e.target.textContent.trim());
+});
