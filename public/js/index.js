@@ -1,6 +1,5 @@
 const contentContainerEL = document.getElementById('content-container');
 const btnContainerEl = document.getElementById('btn-container');
-window.onload = getRandomAnime
 
 let animeData = '';
 const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime?sfw';
@@ -43,11 +42,11 @@ ${title}
 
 const postAnime = () => {
   axios.post('/api/homepageroutes', animeData)
-  .then(response => {
+  .then(res => {
     console.log(animeData);
   })
-  .catch(error => {
-    console.error(error);
+  .catch(err => {
+    console.error(err);
   });
 };
 
@@ -66,3 +65,5 @@ btnContainerEl.addEventListener('click', (e) => {
   // run the next function to check what was clicked
   next(e.target.textContent.trim());
 });
+
+window.onload = getRandomAnime

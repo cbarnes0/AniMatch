@@ -1,13 +1,33 @@
 const router = require('express').Router();
+const path = require('path');
 const Favorite = require('../../models/favorite');
 // const getFavoriteAnime = require('../../public/js/animeFetch');
 const axios = require('axios');
 
+//serve the html page
+router.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../public/views/favorites.html'));
+});
+
+//get all favorites by id
+router.get('/:userId', async (req, res) => {
+  try {
+    const favoriteData = await Favorite.findAll({
+      where: { user_id: req.params.userId }
+    });
+    if (!favoriteData.length) {
+      res.status(404).json({ message: 'No favorites found for that user.' });
+      return;
+    }
+    res.status(200).json(favoriteData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 // GET all favorites
 router.get('/', async (req, res) => {
   try {
     const favoriteData = await Favorite.findAll({
-   
        //include: [{ model: Category}, {model: Tag}],
     });
     res.status(200).json(favoriteData);
