@@ -9,16 +9,12 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', 
-  // body('title').notEmpty(),
-  // body('img_url').isURL(),
-  // body('user_id').isInt(),
+  body('title').notEmpty(),
+  body('img_url').isURL(),
+  body('user_id').isInt(),
   async (req, res) => {
     console.log(req.body);
     try {
-      // const errors = validationResult(req);
-      // if (!errors.isEmpty()) {
-      //   return res.status(400).json({ errors: errors.array() });
-      // }
       console.log(req.body);
       const { title, description, img_url, user_id } = req.body;
 
@@ -28,8 +24,6 @@ router.post('/',
         img_url,
         user_id,
       });
-      console.log('Post successful');
-
       res.status(201).json(newFavorite);
     } catch (error) {
       console.error(error);
