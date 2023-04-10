@@ -1,5 +1,14 @@
 const contentContainerEL = document.getElementById('content-container');
 const btnContainerEl = document.getElementById('btn-container');
+const navSaveEl = document.getElementById('nav-save');
+
+
+
+const getSaved = () => {
+  console.log('i clicked');
+  document.location.replace('/api/favorite');
+ 
+}
 
 let animeData = '';
 const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime?sfw';
@@ -68,5 +77,7 @@ btnContainerEl.addEventListener('click', (e) => {
   // run the next function to check what was clicked
   next(e.target.textContent.trim());
 });
+
+navSaveEl.addEventListener('click', getSaved)
 
 window.onload = getRandomAnime
