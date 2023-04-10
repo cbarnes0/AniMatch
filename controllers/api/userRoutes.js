@@ -8,7 +8,7 @@ const { User, Favorite } = require('../../models');
 
 // POST a signup page
 router.post('/signup', async (req, res) => {
-    console.log('reached api/users/signup');
+    console.log('reached api/userroutes/signup');
     try {
         const { email, password } = req.body;
         const user = new User({ email, password });
@@ -21,10 +21,10 @@ router.post('/signup', async (req, res) => {
 
 // POST a login page
 router.post('/login', async (req, res) => {
-    console.log('reached api/users/login');
+    console.log('reached api/userroutes/login');
     try {
-      const { username, password } = req.body;
-      const user = await User.findOne({ username });
+      const { email, password } = req.body;
+      const user = await User.findOne({email });
       if (!user || user.password !== password) {
         throw new Error('Invalid login credentials');
       }
@@ -33,6 +33,12 @@ router.post('/login', async (req, res) => {
       res.status(401).send({ error: error.message });
     }
   });
+
+
+
+
+
+  
 
 // GET all favorites from a SINGLE user
 router.get('/:userId/favorites', async (req, res) => {
