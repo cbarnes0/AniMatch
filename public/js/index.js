@@ -11,7 +11,10 @@ async function getRandomAnime() {
     })
     .then(function (data) {
       const title = data.data.titles[0].title;
-      const description = data.data.synopsis;
+      let description = data.data.synopsis;
+      if (!description) {
+        description = "Sorry, there is no description found.";
+      };
       const img_url = data.data.images.jpg.large_image_url;
       // const user_id = 1;
       animeData = {
