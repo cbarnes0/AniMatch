@@ -22,13 +22,13 @@ const favoriteData = [
   {
     title: 'Allargando The Animation',
     description: null,
-    img_url:'https://cdn.myanimelist.net/images/anime/1178/103801l.jpg',
+    img_url:'https://cdn.myanimelist.net/images/anime/1681/127046l.jpg',
     user_id: 1
   },
   {
     title: 'Korekuraide Utau',
     description: "Award-nominated independent artist, Kousuke Sugimoto, animates Handsome Kenyas song.",
-    img_url:'https://cdn.myanimelist.net/images/anime/2/29533l.jpg',
+    img_url:'https://cdn.myanimelist.net/images/anime/1512/111549l.jpg',
     user_id: 2
   },
   {
