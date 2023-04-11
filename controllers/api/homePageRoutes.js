@@ -6,7 +6,8 @@ const { body, validationResult } = require('express-validator');
 const withAuth = require('../../utils/auth');
 
 //serve the html page
-router.get('/', withAuth, (req, res) => {
+//put withAuth back
+router.get('/', (req, res) => {
   console.log(req.session);
   res.sendFile(path.join(__dirname, '../../public/views/homePage.html'));
 });

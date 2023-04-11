@@ -90,8 +90,10 @@ router.post('/login', async (req, res) => {
 // Logout
 
 router.post('/logout', (req, res) => {
+  console.log('Session before destroy:', req.session);
   if (req.session.loggedIn) {
     req.session.destroy(() => {
+      console.log('Session after destroy:', req.session);
       res.status(204).end();
     });
   } else {

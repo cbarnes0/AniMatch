@@ -2,15 +2,23 @@
 // const btnContainerEl = document.getElementById('btn-container');
 // const navSaveEl = document.getElementById('nav-save');
 
-const getSaved = () => {
-  console.log('i clicked');
+let animeData = '';
+const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime?sfw';
+// let user_id = ''
+
+const getHomePage = () => {
+  console.log('i clicked Match');
+  document.location.replace('/api/homepageroutes');
+}
+
+const getFavsPage = () => {
+  console.log('i clicked Favorites');
   document.location.replace('/api/favorite');
 }
 
-let animeData = '';
-const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime?sfw';
-
 async function getRandomAnime() {
+  console.log(localStorage);
+  user_id = localStorage.getItem('user_id');
   fetch(randomAnimeURL)
     .then(function (response) {
       return response.json();
@@ -23,12 +31,13 @@ async function getRandomAnime() {
       };
       const img_url = data.data.images.jpg.large_image_url;
       console.log(data);
+      console.log(user_id);
       animeData = {
         title: data.data.titles[0].title,
         description: data.data.synopsis,
         img_url: data.data.images.jpg.large_image_url,
         //need to get this checked to be replaced with the user
-        user_id: 2,
+        user_id: user_id,
       };
       renderImage(title, description, img_url);
     });
@@ -53,19 +62,22 @@ const postAnime = () => {
   axios.post('/api/homepageroutes', animeData)
   .then(res => {
     console.log(animeData);
+    console.log(localStorage);
+    getRandomAnime()
   })
   .catch(err => {
     console.error(err);
   });
 };
 
-const next = (buttonClicked) => {
+
+const checkClick = (buttonClicked) => {
   // console.log('buttonClicked:', buttonClicked);
   if (buttonClicked === 'Pass') {
-    console.log('i clicked Pass');
+    //console.log('i clicked Pass');
     getRandomAnime();
   } else {
-    console.log('i clicked Save');
+    //console.log('i clicked Save');
     postAnime();
   }
 };
@@ -87,8 +99,10 @@ const loginFormHandler = async (event) => {
 
     if (response.ok) {
       const responseData = await response.json();
-      const userId = responseData.user.id;
+      let userId = responseData.user.id;
       console.log(userId);
+      localStorage.setItem('user_id', userId);
+
       // If successful, redirect the browser to the profile page
       document.location.replace('/api/homepageroutes');
     } else {
@@ -103,7 +117,7 @@ const signupFormHandler = async (event) => {
 
   const email = document.getElementById('email-signup').value.trim();
   const password = document.getElementById('password-signup').value.trim();
-console.log(email, password);
+
 console.log(JSON.stringify({ email, password }));
   if (email && password) {
     const response = await fetch('/api/userroutes/signup', {
