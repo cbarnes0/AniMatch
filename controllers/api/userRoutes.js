@@ -1,22 +1,104 @@
 const router = require('express').Router();
 const { User, Favorite } = require('../../models');
+const withAuth = require('../../utils/auth');
+const session = require('express-session');
 
 // GET all users
 // router.get('/', (req, res) => {
 //     console.log('api/users GET endpoint reached');
 // });
 
-// POST a signup page
+// // POST a signup page
+// router.post('/signup', async (req, res) => {
+//     console.log('reached api/userroutes/signup');
+//     try {
+//         const { email, password } = req.body;
+//         const user = new User({ email, password });
+//         await user.save();
+//         res.status(201).send({ message: 'User created successfully' });
+//     } catch (error) {
+//         res.status(400).send({ error: error.message });
+//     }
+// });
+
+// NEW POST Create a new USER on SIGNUP page //
+
 router.post('/signup', async (req, res) => {
-    console.log('reached api/userroutes/signup');
-    try {
-        const { email, password } = req.body;
-        const user = new User({ email, password });
-        await user.save();
-        res.status(201).send({ message: 'User created successfully' });
-    } catch (error) {
-        res.status(400).send({ error: error.message });
+  try {
+    const dbUserData = await User.create({
+      email: req.body.email,
+      password: req.body.password 
+    });
+
+    req.session.save(() => {
+      req.session.loggedIn = true;
+      req.session.user = dbUserData;
+      res.status(200).json({ message: "You are now logged in!", user: dbUserData });
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// ----------------------------------------- //
+
+
+// NEW POST Create a new USER on LOGIN page //
+
+router.post('/login', async (req, res) => {
+  try {
+    const dbUserData = await User.findOne({
+      where: {
+        email: req.body.email,  
+      },
+    });
+
+    if (!dbUserData) {
+      res
+        .status(400)
+        .json({ message: 'DB issue Incorrect email or password. Please try again!'});
+      return;
     }
+
+    const validPassword = await dbUserData.checkPassword(req.body.password);
+    console.log(req.body.password);
+    console.log(validPassword);
+    if (!validPassword) {
+      res
+        .status(400)
+        .json({ message: 'password issue Incorrect email or password. Please try again!' });
+      return;
+    }
+
+    req.session.save(() => {
+      req.session.loggedIn = true;
+      req.session.user_id = dbUserData.id;
+      
+      res
+        .status(200)
+        .json({ user: dbUserData, message: 'You are now logged in!' });
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// ---------------------------------------- //
+
+// Logout
+
+router.post('/logout', (req, res) => {
+  console.log('Session before destroy:', req.session);
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      console.log('Session after destroy:', req.session);
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
 });
 
 // POST a login page
@@ -33,12 +115,6 @@ router.post('/login', async (req, res) => {
       res.status(401).send({ error: error.message });
     }
   });
-
-
-
-
-
-  
 
 // GET all favorites from a SINGLE user
 router.get('/:userId/favorites', async (req, res) => {
@@ -61,17 +137,6 @@ router.get('/:userId/favorites', async (req, res) => {
 // GET single user
 router.get('/:user_id', (req, res) => {
     console.log('api/users/:id GET endpoint reached');
-});
-
-// POST user
-router.post('/', (req, res) => {
-    console.log('/api/users POST endpoint reached');
-});
-
-
-// UPDATE user
-router.put('/', (req, res) => {
-    console.log('/api/users PUT endpoint reached');
 });
 
 // DELETE a user
