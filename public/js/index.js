@@ -1,13 +1,10 @@
-const contentContainerEL = document.getElementById('content-container');
-const btnContainerEl = document.getElementById('btn-container');
-const navSaveEl = document.getElementById('nav-save');
-
-
+// const contentContainerEL = document.getElementById('content-container');
+// const btnContainerEl = document.getElementById('btn-container');
+// const navSaveEl = document.getElementById('nav-save');
 
 const getSaved = () => {
   console.log('i clicked');
   document.location.replace('/api/favorite');
- 
 }
 
 let animeData = '';
@@ -73,11 +70,60 @@ const next = (buttonClicked) => {
   }
 };
 
-btnContainerEl.addEventListener('click', (e) => {
-  // run the next function to check what was clicked
-  next(e.target.textContent.trim());
-});
+const loginFormHandler = async (event) => {
+  event.preventDefault();
 
-navSaveEl.addEventListener('click', getSaved)
+  // Collect values from the login form
+  const email = document.getElementById('email-signup').value.trim();
+  const password = document.getElementById('password-signup').value.trim();
+  if (email && password) {
+    // Send a POST request to the API endpoint
+    const response = await fetch('/api/userroutes/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    console.log(response);
 
-window.onload = getRandomAnime
+    if (response.ok) {
+      const responseData = await response.json();
+      const userId = responseData.user.id;
+      console.log(userId);
+      // If successful, redirect the browser to the profile page
+      document.location.replace('/api/homepageroutes');
+    } else {
+      alert(response.statusText);
+    }
+  }
+};
+
+const signupFormHandler = async (event) => {
+  event.preventDefault();
+  console.log('i was clicked');
+
+  const email = document.getElementById('email-signup').value.trim();
+  const password = document.getElementById('password-signup').value.trim();
+console.log(email, password);
+console.log(JSON.stringify({ email, password }));
+  if (email && password) {
+    const response = await fetch('/api/userroutes/signup', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      document.location.replace('/api/homepageroutes');
+    } else {
+      alert(response.statusText);
+    }
+  }
+};
+// btnContainerEl.addEventListener('click', (e) => {
+//   // run the next function to check what was clicked
+//   next(e.target.textContent.trim());
+// });
+
+// navSaveEl.addEventListener('click', getSaved)
+
+// window.onload = getRandomAnime
