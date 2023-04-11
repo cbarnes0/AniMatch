@@ -1,18 +1,14 @@
 const path = require('path');
 const express = require('express');
-const routes = require('./routes');
+const routes = require('./controllers');
 //const helpers = require('./utils/helpers');
 
 const sequelize = require('./config/connections');
 //const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const getRandomAnime = require('./public/js/animeFetch')
-
 const app = express();
+// app.use(cors())
 const PORT = process.env.PORT || 3001;
-
-// here for testing
-getRandomAnime()
 
 // const sess = {
 //   secret: 'Super secret secret',
@@ -38,5 +34,5 @@ getRandomAnime()
  app.use(routes);
 
  sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log('Now listening'));
+  app.listen(PORT, () => console.log(`🚀 Now listening on Port ${PORT} 🖥️`));
 });
