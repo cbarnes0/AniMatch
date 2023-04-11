@@ -1,38 +1,39 @@
 const router = require('express').Router();
 const { User, Favorite } = require('../../models');
 const withAuth = require('../../utils/auth');
+const session = require('express-session');
 
 // GET all users
 // router.get('/', (req, res) => {
 //     console.log('api/users GET endpoint reached');
 // });
 
-// POST a signup page
-router.post('/signup', async (req, res) => {
-    console.log('reached api/userroutes/signup');
-    try {
-        const { email, password } = req.body;
-        const user = new User({ email, password });
-        await user.save();
-        res.status(201).send({ message: 'User created successfully' });
-    } catch (error) {
-        res.status(400).send({ error: error.message });
-    }
-});
+// // POST a signup page
+// router.post('/signup', async (req, res) => {
+//     console.log('reached api/userroutes/signup');
+//     try {
+//         const { email, password } = req.body;
+//         const user = new User({ email, password });
+//         await user.save();
+//         res.status(201).send({ message: 'User created successfully' });
+//     } catch (error) {
+//         res.status(400).send({ error: error.message });
+//     }
+// });
 
 // NEW POST Create a new USER on SIGNUP page //
 
-router.post('/', async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     const dbUserData = await User.create({
       email: req.body.email,
       password: req.body.password 
     });
 
-    req.session(() => {
+    req.session.save(() => {
       req.session.loggedIn = true;
-
-      res.status(200).json(dbUserData);
+      req.session.user = dbUserData;
+      res.status(200).json({ message: "You are now logged in!", user: dbUserData });
     });
   } catch (err) {
     console.log(err);
@@ -71,7 +72,8 @@ router.post('/login', async (req, res) => {
 
     req.session.save(() => {
       req.session.loggedIn = true;
-
+      req.session.user_id = dbUserData.id;
+      
       res
         .status(200)
         .json({ user: dbUserData, message: 'You are now logged in!' });
