@@ -69,7 +69,7 @@ const next = (buttonClicked) => {
     getRandomAnime();
   } else {
     console.log('i clicked Save');
-    postAnime();
+    getRandomAnime();
   }
 };
 
