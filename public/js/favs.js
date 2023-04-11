@@ -26,16 +26,14 @@ const createCards = (favsData) => {
        
       // replace the html element with the thubmnails
       favsContainerEl.innerHTML += `
-      <div id="favs-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-10 gap-y-10">
       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
       <img src=${url} alt="Image 1" class="w-full">
       <div class="p-4">
         <h2 class="text-lg font-medium mb-2">${title}</h2>
-        <p class="text-gray-500">${description}</p>
       </div>
       </div>
       `;
     };
 
 }
-//window.onload = getUserFavs
+window.onload = getUserFavs
