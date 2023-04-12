@@ -25,6 +25,33 @@ router.get('/:userId', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// DELETE favorite by title
+router.delete('/:title', async (req, res) => {
+  try {
+    console.log(req);
+    // must encode it since it was sent with special characters 
+    const encodedTitle = req.params.title;
+    console.log(encodedTitle);
+    // decode to remove the characters
+    const decodedTitle = decodeURIComponent(encodedTitle);
+    // search for a match and then DELETE
+    const favoriteData = await Favorite.destroy({
+      where: {
+        title: decodedTitle,
+      },
+    });
+    if (!favoriteData) {
+      // if no favorite with that title exist
+      res.status(404).json({ message: 'No favorite found with that title.' });
+      return;
+    }
+    // response code if delete was successful
+    res.status(200).json(favoriteData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 // GET all favorites
 router.get('/', async (req, res) => {
   try {

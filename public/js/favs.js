@@ -4,17 +4,16 @@ const favoritesBtn = document.getElementById('favorites-button')
 const hamburgerFavoritesBtn = document.getElementById('favorites-button-hamburger')
 const hamburgerMatchBtn = document.getElementById('match-button-hamburger')
 
-
-// select all remove buttons
-const removeButtons = document.querySelectorAll('.remove-btn button');
-
-// add click event listener to each remove button
-removeButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    // handle button click here
-    console.log('Button clicked');
-  });
-});
+const removeFav = (title) => {
+  axios.delete(`/api/favorite/${title}`)
+    .then(response => {
+      console.log(response.data);
+      location.reload();
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
 
 //need to run a check on the user id to put in the api route
 const getUserFavs = () => {
@@ -67,16 +66,17 @@ const removeButtons = document.querySelectorAll('.remove-btn button');
 // add click event listener to each remove button
 removeButtons.forEach(button => {
   button.addEventListener('click', () => {
-    // handle button click here
-    console.log('Button clicked');
+    console.log('clicked');
+    const card = button.closest('#card');
+    const title = card.querySelector('h2').textContent.trim();
+    console.log(title);
+    // must encode the title since it has spaces in it and send it to the server
+    console.log(encodeURIComponent(title));
+    removeFav(encodeURIComponent(title));
   });
 });
   }
 
-const removeFav = () => {
-  console.log('remove clicked');
-
-}
 
   navMatchEl.addEventListener('click', getHomePage)
   favoritesBtn.addEventListener('click', getFavsPage)
