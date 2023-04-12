@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const path = require('path');
 const Favorite = require('../../models/favorite');
-const { log } = require('console');
+// const { log } = require('console');
 const { body, validationResult } = require('express-validator');
 const withAuth = require('../../utils/auth');
 
