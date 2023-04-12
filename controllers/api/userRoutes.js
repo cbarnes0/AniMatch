@@ -8,19 +8,6 @@ const session = require('express-session');
 //     console.log('api/users GET endpoint reached');
 // });
 
-// // POST a signup page
-// router.post('/signup', async (req, res) => {
-//     console.log('reached api/userroutes/signup');
-//     try {
-//         const { email, password } = req.body;
-//         const user = new User({ email, password });
-//         await user.save();
-//         res.status(201).send({ message: 'User created successfully' });
-//     } catch (error) {
-//         res.status(400).send({ error: error.message });
-//     }
-// });
-
 // NEW POST Create a new USER on SIGNUP page //
 
 router.post('/signup', async (req, res) => {
@@ -62,8 +49,6 @@ router.post('/login', async (req, res) => {
     }
 
     const validPassword = await dbUserData.checkPassword(req.body.password);
-    console.log(req.body.password);
-    console.log(validPassword);
     if (!validPassword) {
       res
         .status(400)
