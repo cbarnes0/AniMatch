@@ -5,7 +5,6 @@ const Favorite = require('../../models/favorite');
 const withAuth = require('../../utils/auth');
 
 //serve the html page
-//put withAuth back
 router.get('/', withAuth, (req, res) => {
   console.log(req.session);
   res.sendFile(path.join(__dirname, '../../public/views/homePage.html'));

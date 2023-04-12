@@ -25,6 +25,10 @@ async function getRandomAnime() {
         description = "Sorry, there is no description found.";
       };
       const img_url = data.data.images.jpg.large_image_url;
+      const mal_id = data.data.mal_id;
+      const url = data.data.url 
+      console.log(data.data.mal_id);
+      console.log(data.data.url);
       console.log(user_id);
       animeData = {
         title: data.data.titles[0].title,

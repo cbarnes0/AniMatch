@@ -4,6 +4,18 @@ const favoritesBtn = document.getElementById('favorites-button')
 const hamburgerFavoritesBtn = document.getElementById('favorites-button-hamburger')
 const hamburgerMatchBtn = document.getElementById('match-button-hamburger')
 
+
+// select all remove buttons
+const removeButtons = document.querySelectorAll('.remove-btn button');
+
+// add click event listener to each remove button
+removeButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // handle button click here
+    console.log('Button clicked');
+  });
+});
+
 //need to run a check on the user id to put in the api route
 const getUserFavs = () => {
   console.log(localStorage);
@@ -37,12 +49,34 @@ const createCards = (favsData) => {
       <!-- this is cut content to be added later to the above div class: bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 -->
       <img src="${img_url}" alt="animer cover" class="w-full">
       <div class="p-4">
-        <h2 class="flex justify-center text-lg text- font-medium mb-2">${title}</h2>
+        <h2 class="text-center text-lg font-medium mb-2">${title}</h2>
       </div>
+      <div class="remove-btn flex justify-center" >
+      <button 
+      type="button"
+      class="border border-blue-500 bg-blue-500 text-white rounded-md px-2 py-1 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline"
+    >Remove
+  </button>
+</div>
     </div>
      `
     };
+    // select all remove buttons
+const removeButtons = document.querySelectorAll('.remove-btn button');
+
+// add click event listener to each remove button
+removeButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // handle button click here
+    console.log('Button clicked');
+  });
+});
   }
+
+const removeFav = () => {
+  console.log('remove clicked');
+
+}
 
   navMatchEl.addEventListener('click', getHomePage)
   favoritesBtn.addEventListener('click', getFavsPage)
