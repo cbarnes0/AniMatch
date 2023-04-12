@@ -1,10 +1,5 @@
-// const contentContainerEL = document.getElementById('content-container');
-// const btnContainerEl = document.getElementById('btn-container');
-// const navSaveEl = document.getElementById('nav-save');
-
 let animeData = '';
 const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime?sfw';
-// let user_id = ''
 
 const getHomePage = () => {
   console.log('i clicked Match');
@@ -30,13 +25,15 @@ async function getRandomAnime() {
         description = "Sorry, there is no description found.";
       };
       const img_url = data.data.images.jpg.large_image_url;
-      console.log(data);
+      const mal_id = data.data.mal_id;
+      const url = data.data.url 
+      console.log(data.data.mal_id);
+      console.log(data.data.url);
       console.log(user_id);
       animeData = {
         title: data.data.titles[0].title,
         description: data.data.synopsis,
         img_url: data.data.images.jpg.large_image_url,
-        //need to get this checked to be replaced with the user
         user_id: user_id,
       };
       renderImage(title, description, img_url);
@@ -95,7 +92,6 @@ const loginFormHandler = async (event) => {
       body: JSON.stringify({ email, password }),
       headers: { 'Content-Type': 'application/json' },
     });
-    console.log(response);
 
     if (response.ok) {
       const responseData = await response.json();
@@ -113,7 +109,6 @@ const loginFormHandler = async (event) => {
 
 const signupFormHandler = async (event) => {
   event.preventDefault();
-  console.log('i was clicked');
 
   const email = document.getElementById('email-signup').value.trim();
   const password = document.getElementById('password-signup').value.trim();
@@ -127,17 +122,12 @@ console.log(JSON.stringify({ email, password }));
     });
 
     if (response.ok) {
+      const responseData = await response.json();
+      let userId = responseData.user.id;
+      localStorage.setItem('user_id', userId);
       document.location.replace('/api/homepageroutes');
     } else {
       alert(response.statusText);
     }
   }
 };
-// btnContainerEl.addEventListener('click', (e) => {
-//   // run the next function to check what was clicked
-//   next(e.target.textContent.trim());
-// });
-
-// navSaveEl.addEventListener('click', getSaved)
-
-// window.onload = getRandomAnime
