@@ -11,6 +11,10 @@ const getFavsPage = () => {
   document.location.replace('/api/favorite');
 }
 
+const getAboutPage = () => {
+  console.log('i clicked About');
+  document.location.replace('/api/about');
+}
 async function getRandomAnime() {
   console.log(localStorage);
   user_id = localStorage.getItem('user_id');
