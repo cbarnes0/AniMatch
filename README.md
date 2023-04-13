@@ -4,7 +4,7 @@
 
 ## Description 📋
 
-AniMatch is a website for anime enthusiasts where users are presented with a random selection of anime titles to either save or pass on. Users can click through potential anime matches. AniMatch provides a fun and engaging way for anime fans to discover new titles and discover new anime.
+AniMatch is a website for anime enthusiasts where users are presented with a random selection of anime titles to either save or pass on. Users can click through potential anime matches. AniMatch provides a fun and engaging way for anime fans to discover new anime.
 
 ## Table of Contents 🗄️
 
