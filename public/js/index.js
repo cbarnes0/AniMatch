@@ -1,18 +1,15 @@
 let animeData = '';
-const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime?sfw';
+const randomAnimeURL = 'https://api.jikan.moe/v4/random/anime?sfw=true';
 
 const getHomePage = () => {
-  console.log('i clicked Match');
   document.location.replace('/api/homepageroutes');
 }
 
 const getFavsPage = () => {
-  console.log('i clicked Favorites');
   document.location.replace('/api/favorite');
 }
 
 const getAboutPage = () => {
-  console.log('i clicked About');
   document.location.replace('/api/about');
 }
 async function getRandomAnime() {
