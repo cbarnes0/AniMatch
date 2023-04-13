@@ -36,22 +36,29 @@ async function getRandomAnime() {
         img_url: data.data.images.jpg.large_image_url,
         user_id: user_id,
       };
-      renderImage(title, description, img_url);
+      renderImage(title, img_url, description);
     });
 }
 
-const renderImage = (title, synopsis, url) => {
+const renderImage = (title, img_url, description) => {
   contentContainerEL.innerHTML = `
- <img alt="Art"
- src="${url}"
- class="h-64 w-full object-cover sm:h-80 lg:h-96" />
-<h3 class="mt-4 text-2xl font-bold text-gray-900 sm:text-3xl text-center">
-${title}
-</h3>
-<p class="mt-2 max-w-sm text-lg text-gray-700 text-center">
- ${synopsis}
-</p>
-</a>
+  <div w-full>
+  <!-- Add more cards as needed -->
+  <div class="mt-10 bg-white rounded-lg shadow-lg overflow-hidden transform duration-500 font-extrabold">
+    <!-- anime match image -->
+    <img id="match-image" class="w-full max-h-full flex"
+      src="${img_url}" alt="anime" cover width="500" height="600">
+    <div class="p-4">
+      <!-- anime match title -->
+      <h3 id="match-title" class="flex justify-center text-lg text- font-medium mb-2">${title}</h3>
+    </div>
+  </div>
+</div>
+<div id="description-container" class="flex justify-center m-6 min-w-full">
+  <!-- Anime description -->
+  <p class="font-medium text-center text-lg mt-6 mb-2 text-black overflow-hidden w-1/2">
+   ${description}</p>
+</div>
  `;
 };
 
