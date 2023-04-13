@@ -1,5 +1,6 @@
 
 const contentContainerEL = document.getElementById('content-container');
+//const descriptionContainerEL = document.getElementById('description-container');
 const btnContainerEl = document.getElementById('btn-container');
 const navMatchEl = document.getElementById('match-button');
 const favoritesBtn = document.getElementById('favorites-button')
