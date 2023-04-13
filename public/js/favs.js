@@ -46,7 +46,7 @@ const createCards = (favsData) => {
      
       // replace the html element with the thubmnails
       favsContainerEl.innerHTML += `
-      <div id="card" class="flex flex-col mt-6 bg-white rounded-lg shadow-lg overflow-hidden transform duration-500 hover:scale-105 hover:text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-purple-900 to-pink-900 text-lg font-extrabold">
+      <div id="card"  class="flex flex-col mt-6 bg-white rounded-lg shadow-lg overflow-hidden transform duration-500 hover:scale-105 hover:text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-purple-900 to-pink-900 text-lg font-extrabold">
       <!-- this is cut content to be added later to the above div class: bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 -->
       <div style="height:275px;overflow:hidden">
       <img src="${img_url}" alt="animer cover" class="w-full">
