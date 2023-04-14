@@ -75,7 +75,6 @@ const postAnime = () => {
   });
 };
 
-
 const checkClick = (buttonClicked) => {
   // console.log('buttonClicked:', buttonClicked);
   if (buttonClicked === 'Pass') {

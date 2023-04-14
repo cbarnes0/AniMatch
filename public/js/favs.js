@@ -81,7 +81,6 @@ removeButtons.forEach(button => {
 });
   }
 
-
   navMatchEl.addEventListener('click', getHomePage)
   favoritesBtn.addEventListener('click', getFavsPage)
   hamburgerMatchBtn.addEventListener('click', getHomePage )
