@@ -2,7 +2,7 @@
 
 # AniMatch
 
-## Description 📋
+## Description 📋 o
 
 AniMatch is a website for anime enthusiasts where users are presented with a random selection of anime titles to either save or pass on. Users can click through potential anime matches. AniMatch provides a fun and engaging way for anime fans to discover new anime.
 
@@ -64,5 +64,6 @@ No Test Needed.
 
 N/A
 
-## Deploymeny Link 
+## Deploymeny Link
+
 <a href="https://animatch.herokuapp.com">AniMatch</a>
